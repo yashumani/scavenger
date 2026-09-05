@@ -2,9 +2,11 @@
 
 Cycle: initial v0.1.0 skill bootstrap. Date: 2026-09-05.
 
-## Completed locally
+## Completed
 
-The skill instructions, research/evaluation/security references, project templates, structured evidence contract, offline initialization/validation/scoring helpers, synthetic example, requirements baseline, architecture source diagrams, and development roadmap are implemented.
+The initial implementation is published on `main` in commit `543065223ef0297405c892dc2ef528d4a00b4525`. It contains 19 files: the skill instructions, research/evaluation/security references, project templates, structured evidence contract, offline initialization/validation/scoring helpers, synthetic example, requirements baseline, architecture source diagrams, development roadmap, and CI configuration.
+
+## Local verification
 
 Validation executed with Python 3.13.5:
 
@@ -15,11 +17,21 @@ Validation executed with Python 3.13.5:
 | `python scripts/scavenger.py validate examples/demo-record.json` | Passed as an explicitly synthetic handoff record. |
 | `python scripts/scavenger.py score examples/demo-record.json` | C-001: 84; C-002: review-required, score withheld. |
 
+The skill frontmatter also parsed successfully with the environment's installed YAML parser, and all relative Markdown file links resolved. Eighteen published Git blobs matched the locally tested files byte-for-byte. The demo JSON was reformatted during upload and was subsequently exercised by remote CI.
+
 An initial test run exposed overly generic URL validation errors. The error handling was corrected, and the complete suite was rerun successfully before publication.
 
-## Remote validation
+## Remote verification
 
-The GitHub Actions workflow is defined for Python 3.11, 3.12, and 3.13 with read-only repository permissions and commit-pinned actions. Remote execution has not yet been observed at the time of this bootstrap record. Consult the workflow run for the exact commit; do not equate workflow configuration with a passing run.
+[Validate Scavenger run 33984100225](https://github.com/yashumani/scavenger/actions/runs/33984100225) executed against implementation commit `543065223ef0297405c892dc2ef528d4a00b4525` on 2026-09-05. All three jobs completed successfully:
+
+| Job | Result |
+| --- | --- |
+| Python 3.11 | Success: skill check, 30-test suite, demo record validation, and scoring. |
+| Python 3.12 | Success: skill check, 30-test suite, demo record validation, and scoring. |
+| Python 3.13 | Success: skill check, 30-test suite, demo record validation, and scoring. |
+
+The workflow uses read-only repository permissions and commit-pinned actions. This follow-up commit updates only the status document; the verification above is explicitly tied to the implementation commit, not to untested future changes.
 
 ## Not yet verified
 
