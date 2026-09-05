@@ -2,6 +2,8 @@
 
 ## 0.2.0-rc.1 — release preparation, not a tagged stable release
 
+Finalization adds candidate release notes and a GitHub Actions package job gated on all five validation jobs. The artifact includes a reproducible ZIP, checksum, and exact-revision evidence; the CodeQL result remains a separate required review. Download instructions state sign-in, retention, and checksum limitations. The runtime is unchanged by this finalization.
+
 Add MIT licensing, public onboarding, contribution and security policies, issue/PR templates, a pre-mortem, and explicit launch gates. Harden offline parsing against nonfinite JSON, unknown fields, unsafe controls, excessive resource use, ambiguous/private URLs, and unsafe file types. Preserve the schema 0.1 documented fields while deliberately rejecting formerly accepted malformed inputs.
 
 Use exclusive workspace creation, preload templates, roll back files created by failed writes, and make score output explicitly state that evidence truth is unverified. Add adversarial and integration regressions, deterministic record simulations, an allowlisted reproducible ZIP with per-file hashes, package verification, and an extracted-package smoke test. Expand CI to Linux/macOS/Windows and add commit-pinned CodeQL analysis and Dependabot configuration.
