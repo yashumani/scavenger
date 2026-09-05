@@ -150,7 +150,7 @@ class HelperTests(unittest.TestCase):
 
     def test_init_never_overwrites(self):
         with tempfile.TemporaryDirectory() as temp:
-            destination = Path(temp) / "project"
+            destination = Path(temp).resolve() / "project"
             s.init_run(destination, "My project")
             s.validate(s.load(destination / "research-record.json"))
             with self.assertRaises(FileExistsError):

@@ -1,0 +1,23 @@
+name: Host compatibility report
+description: Submit an actual host evaluation, including failures and blocked cases.
+body:
+  - type: input
+    id: configuration
+    attributes:
+      label: Host, model, skill commit, and date
+    validations:
+      required: true
+  - type: textarea
+    id: permissions
+    attributes:
+      label: Tool availability and permissions
+      description: No tokens, customer data, or internal hostnames.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Cases run and observed results
+      description: Reference evals/host-cases.json. Mark pass, fail, blocked, or not-run; include only approved sanitized traces.
+    validations:
+      required: true

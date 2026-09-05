@@ -1,9 +1,15 @@
 __pycache__/
 *.py[cod]
+.coverage*
+htmlcov/
 .venv/
 .env
 .env.*
 !.env.example
 runs/
+workspaces/
+dist/
+*.zip
+codeql-results/
 private/
 .DS_Store

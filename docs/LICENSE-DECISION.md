@@ -1,9 +1,9 @@
 # Distribution license decision
 
-Status: owner approval pending, 2026-09-05.
+Date: 2026-09-05. Status: MIT selected during the owner's requested public-release preparation, including licensing.
 
-The initial repository contained a README but no license. This bootstrap does not silently select a distribution license for the owner. There is intentionally no LICENSE file or license claim in SKILL.md yet. The skill is designed to research open-source work; that does not itself license this repository.
+The original Scavenger code and documentation use the MIT license in the root LICENSE file. This supports inspection, modification, contribution, and redistribution with the required notice preserved. SKILL.md declares the same license. This supersedes the bootstrap's pending-license status.
 
-Before a shareable open-source release, the owner should select the intended license and have its implications reviewed as needed. Then add the approved license text, update SKILL.md/README metadata, and record the decision. MIT is one candidate for consideration, not an applied or approved license.
+The decision does not apply MIT to third-party repositories, model weights, datasets, images, or services investigated by Scavenger. Each has its own applicable permissions, obligations, and operating costs. See [third-party notices](THIRD-PARTY-NOTICES.md).
 
-Visibility alone is not a general reuse grant. See [GitHub's repository licensing guidance](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository), checked 2026-09-05. Third-party material remains governed by its own license and attribution requirements; a future Scavenger license does not override them.
+Reference: [Open Source Initiative's MIT license text](https://opensource.org/license/mit), checked 2026-09-05. This is a project licensing decision, not advice about a downstream combination's legal compatibility.

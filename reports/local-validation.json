@@ -1,0 +1,42 @@
+{
+  "date": "2026-09-05",
+  "kind": "first-party-local-validation",
+  "python": "3.13.5",
+  "platform": "linux",
+  "unit_and_integration_tests": 76,
+  "skipped_tests_on_this_platform": 0,
+  "test_outcome": "pass",
+  "simulation_scenarios": 12,
+  "gate_combinations": 243,
+  "invalid_score_mutations": 1000,
+  "seed": 20260905,
+  "coverage_tool_version": "7.13.3",
+  "coverage": {
+    "covered_lines": 547,
+    "num_statements": 588,
+    "percent_covered": 90.97744360902256,
+    "percent_covered_display": "91",
+    "missing_lines": 41,
+    "excluded_lines": 0,
+    "percent_statements_covered": 93.02721088435374,
+    "percent_statements_covered_display": "93",
+    "num_branches": 210,
+    "num_partial_branches": 27,
+    "covered_branches": 179,
+    "missing_branches": 31,
+    "percent_branches_covered": 85.23809523809524,
+    "percent_branches_covered_display": "85"
+  },
+  "coverage_scope": "In-process branch-enabled coverage of scripts; subprocess CLI coverage is not collected.",
+  "independent_yaml_parser": "PyYAML 6.0.3",
+  "yaml_result": "Skill frontmatter and all workflow/issue YAML parsed successfully.",
+  "runtime_sha256": {
+    "scripts/scavenger.py": "00f4ad5858b17f1bec91b69564ecb8ec6a592d5abf35254e114a37a4acf1696e",
+    "scripts/guardrails.py": "2471e6a69b7801feb659a18c92543f695e6c4ec2259c4595653e1bdaf27ac68b"
+  },
+  "package_validation": "Two identical builds; manifest verification; five extracted-helper commands passed.",
+  "agent_host_installations_tested": 0,
+  "live_model_evaluations": 0,
+  "independent_security_audit": false,
+  "limitations": "Counts apply to the tested local source; see docs/STATUS.md for exact remote revisions and CI outcomes."
+}

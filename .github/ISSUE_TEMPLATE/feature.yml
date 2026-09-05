@@ -1,0 +1,15 @@
+name: Improvement proposal
+description: Propose a requirement, workflow, research example, or documentation improvement.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and acceptance criteria
+      description: Explain the user need and a testable outcome, without private project details.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Alternatives, evidence, and scope
+      description: Include relevant public sources, licensing considerations, and likely risks.

@@ -1,0 +1,44 @@
+name: CodeQL security analysis
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4, resolved 2026-09-05
+        with:
+          languages: python
+          build-mode: none
+          queries: security-extended
+      - uses: github/codeql-action/analyze@cdf488f595d80d6e07e03d4674febd5ab45fa938 # v4, resolved 2026-09-05
+        with:
+          output: codeql-results
+      - name: Require review of every reported finding
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          files = list(Path('codeql-results').glob('*.sarif'))
+          if not files:
+              raise SystemExit('No SARIF results produced; analysis is not verified.')
+          findings = sum(len(run.get('results', [])) for path in files for run in json.loads(path.read_text()).get('runs', []))
+          print(f'CodeQL SARIF files: {len(files)}; findings: {findings}')
+          if findings:
+              raise SystemExit('Review and resolve CodeQL findings before release.')
+          PY

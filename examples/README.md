@@ -1,7 +1,5 @@
-# Synthetic example
+# Examples
 
-`demo-record.json` is a fictional offline fixture. No listed source is a real project, no code was inspected, and no license/security approval actually occurred. The `synthetic` flag and `.example` domains make this explicit.
+`demo-record.json` is intentionally synthetic. The sources use reserved example domains, and every observation is a fixture, not research about a real component. Candidate C-001 scores 84 using the default rubric. Candidate C-002 has higher raw ratings but an unresolved license gate, so its score is withheld.
 
-The fixture shows a candidate with a weighted score of 84 and a second candidate whose unresolved license gate prevents scoring despite maximum input ratings. It also demonstrates requirement mapping, claim evidence, gate/score notes, and a handoff disposition.
-
-Run `python scripts/scavenger.py score examples/demo-record.json` from the repository root. Do not copy this example into a real report as evidence. A real, source-backed pilot is a separate roadmap item.
+Use this to inspect the data contract or test helper behavior. Do not copy its approvals, evidence levels, or claims into a real project. Use `assets/project-brief.md` and a new workspace for actual research. Sanitized real-project walkthroughs are welcome through the contribution process, but never publish private data or unsupported approval claims.
