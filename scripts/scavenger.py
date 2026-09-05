@@ -9,7 +9,8 @@ import sys
 from datetime import date
 from pathlib import Path
 from typing import Any
-from urllib.parse import urlsplit
+from guardrails import (Invalid, check_shape, check_record_fields, clean_text,
+                        public_url, read_json, write_workspace)
 
 WEIGHTS = {"requirement_fit": 35, "integration": 20, "maintenance": 15,
            "documentation": 10, "deployment": 10, "operating_cost": 10}
@@ -21,18 +22,13 @@ ROOT = Path(__file__).resolve().parents[1]
 MAX_BYTES = 2_000_000
 
 
-class Invalid(ValueError):
-    """Actionable validation failure."""
-
-
 def need(condition: bool, message: str) -> None:
     if not condition:
         raise Invalid(message)
 
 
 def text(value: Any, where: str) -> str:
-    need(isinstance(value, str) and bool(value.strip()), f"{where}: expected nonempty text")
-    return value
+    return clean_text(value, where)
 
 
 def obj(value: Any, where: str) -> dict:
@@ -55,22 +51,7 @@ def iso_date(value: Any, where: str) -> date:
 
 
 def url(value: Any, where: str, synthetic: bool) -> None:
-    text(value, where)
-    try:
-        parsed = urlsplit(value)
-        hostname = parsed.hostname or ""
-        need(parsed.scheme == "https" and bool(hostname), f"{where}: use an HTTPS URL")
-        need(not parsed.username and not parsed.password, f"{where}: credentials are forbidden")
-        need(not parsed.query, f"{where}: use a canonical URL without query parameters")
-        need(not any(c.isspace() for c in value), f"{where}: whitespace in URL")
-        if not synthetic:
-            need(not hostname.endswith((".example", ".invalid", ".test", ".localhost"))
-                 and hostname not in {"example.com", "example.org", "example.net", "localhost"},
-                 f"{where}: placeholder host requires synthetic=true")
-    except Invalid:
-        raise
-    except ValueError as exc:
-        raise Invalid(f"{where}: invalid URL") from exc
+    public_url(value, where, synthetic)
 
 
 def indexed(value: Any, where: str) -> dict[str, dict]:
@@ -101,7 +82,9 @@ def note(value: Any, sources: dict, where: str) -> None:
 
 def validate(record: Any) -> dict:
     """Validate declared evidence and traceability; never certify factual truth."""
+    check_shape(record)
     r = obj(record, "record")
+    check_record_fields(r)
     need(r.get("schema_version") == "0.1", "schema_version: expected 0.1")
     project = obj(r.get("project"), "project")
     text(project.get("name"), "project.name")
@@ -140,7 +123,7 @@ def validate(record: Any) -> dict:
             refs(ev.get("requirement_ids"), {key: requirements[key] for key in mapped},
                  f"{cid}.evidence.requirement_ids")
             text(ev.get("claim"), f"{cid}.evidence.claim")
-            need(ev.get("level") in LEVELS, f"{cid}: invalid evidence level")
+            need(isinstance(ev.get("level"), str) and ev.get("level") in LEVELS, f"{cid}: invalid evidence level")
             if ev["level"] == "tested":
                 test = obj(ev.get("test"), f"{cid}.evidence.test")
                 for field in ("command", "environment", "revision", "result"):
@@ -169,7 +152,7 @@ def validate(record: Any) -> dict:
         need(rid not in decided, f"decision: duplicate disposition for {rid}")
         decided.add(rid)
         disposition = row.get("disposition")
-        need(disposition in DISPOSITIONS, f"{rid}: invalid disposition")
+        need(isinstance(disposition, str) and disposition in DISPOSITIONS, f"{rid}: invalid disposition")
         text(row.get("rationale"), f"{rid}.rationale")
         selected = refs(row.get("candidate_ids"), candidates, f"{rid}.candidate_ids",
                         nonempty=disposition in REUSE | {"reference-only"})
@@ -206,7 +189,7 @@ def score(record: Any) -> list[dict]:
             status = "unscored"
         value = round(sum(WEIGHTS[key] * ratings[key] / 5 for key in WEIGHTS), 2) if status == "eligible" else None
         result.append({"id": candidate["id"], "status": status, "score": value,
-                       "synthetic": r["project"]["synthetic"]})
+                       "synthetic": r["project"]["synthetic"], "evidence_truth_verified": False})
     return sorted(result, key=lambda row: (row["score"] is None, -(row["score"] or 0), row["id"]))
 
 
@@ -219,9 +202,7 @@ def unique_object(pairs: list[tuple]) -> dict:
 
 
 def load(path: Path) -> Any:
-    need(path.stat().st_size <= MAX_BYTES, "JSON: file exceeds 2 MB safety limit")
-    with path.open(encoding="utf-8") as handle:
-        return json.load(handle, object_pairs_hook=unique_object)
+    return read_json(path)
 
 
 def init_run(destination: Path, name: str) -> None:
@@ -229,11 +210,12 @@ def init_run(destination: Path, name: str) -> None:
     record = load(ROOT / "assets/research-record.json")
     record["project"].update(name=name, as_of=date.today().isoformat())
     record["limitations"] = ["Draft only. No research has been performed."]
-    # mkdir(exist_ok=False) prevents overwriting any existing project directory.
-    destination.mkdir(parents=True, exist_ok=False)
-    for source, output in (("project-brief.md", "project-brief.md"), ("handoff.md", "handoff.md")):
-        (destination / output).write_text((ROOT / "assets" / source).read_text(encoding="utf-8"), encoding="utf-8")
-    (destination / "research-record.json").write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
+    # Read and validate all templates before creating any output directory.
+    validate(record)
+    contents = {name: (ROOT / "assets" / name).read_text(encoding="utf-8")
+                for name in ("project-brief.md", "handoff.md")}
+    contents["research-record.json"] = json.dumps(record, indent=2, ensure_ascii=True) + "\n"
+    write_workspace(destination, contents)
 
 
 def check_skill(root: Path) -> None:
@@ -275,7 +257,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "init":
             init_run(args.path, args.name)
-            print(f"Created draft research workspace: {args.path}")
+            print("Created draft research workspace (no research performed).")
         elif args.command == "check-skill":
             check_skill(args.path)
             print("Repository skill checks passed (not host installation validation).")
@@ -286,7 +268,9 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(score(load(args.path)), indent=2))
         return 0
     except (Invalid, OSError, ValueError, TypeError, RecursionError) as exc:
-        print(f"ERROR: {exc}", file=sys.stderr)
+        # Escape and bound validation diagnostics; do not echo raw OS paths.
+        message = str(exc) if isinstance(exc, Invalid) else type(exc).__name__ + ": operation failed"
+        print("ERROR: " + message.encode("unicode_escape").decode("ascii")[:600], file=sys.stderr)
         return 2
 
 

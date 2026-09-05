@@ -1,57 +1,264 @@
 {
   "schema_version": "0.1",
-  "project": {"name": "Synthetic Scavenger demonstration", "as_of": "2026-09-05", "mode": "handoff", "synthetic": true},
-  "requirements": [{"id": "REQ-001", "text": "Expose a documented ingestion interface.", "priority": "must", "acceptance": "An authorized integration test can submit a sample and verify its response."}],
-  "sources": [
-    {"id": "SRC-001", "url": "https://components.example/C-001/source", "accessed_on": "2026-09-05", "revision": "synthetic-fixture-r1", "locator": "Synthetic source locator; no real code was inspected."},
-    {"id": "SRC-002", "url": "https://components.example/C-002/source", "accessed_on": "2026-09-05", "revision": "synthetic-fixture-r1", "locator": "Synthetic source locator; no real code was inspected."}
+  "project": {
+    "name": "Synthetic Scavenger demonstration",
+    "as_of": "2026-09-05",
+    "mode": "handoff",
+    "synthetic": true
+  },
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "text": "Expose a documented ingestion interface.",
+      "priority": "must",
+      "acceptance": "An authorized integration test can submit a sample and verify its response."
+    }
   ],
-  "query_log": [{"date": "2026-09-05", "query": "synthetic ingestion component fixture", "platform": "offline test fixture", "outcome": "Two fictional candidates, no live research performed."}],
+  "sources": [
+    {
+      "id": "SRC-001",
+      "url": "https://components.example/C-001/source",
+      "accessed_on": "2026-09-05",
+      "revision": "synthetic-fixture-r1",
+      "locator": "Synthetic source locator; no real code was inspected."
+    },
+    {
+      "id": "SRC-002",
+      "url": "https://components.example/C-002/source",
+      "accessed_on": "2026-09-05",
+      "revision": "synthetic-fixture-r1",
+      "locator": "Synthetic source locator; no real code was inspected."
+    }
+  ],
+  "query_log": [
+    {
+      "date": "2026-09-05",
+      "query": "synthetic ingestion component fixture",
+      "platform": "offline test fixture",
+      "outcome": "Two fictional candidates, no live research performed."
+    }
+  ],
   "candidates": [
     {
-      "id": "C-001", "name": "Synthetic component C-001", "url": "https://components.example/C-001", "requirement_ids": ["REQ-001"],
-      "evidence": [{"source_id": "SRC-001", "requirement_ids": ["REQ-001"], "claim": "Synthetic fixture: a component exposes the required interface. This is not real research.", "level": "code-inspected"}],
-      "gates": {"license": "pass", "security": "pass", "privacy": "pass", "deployment": "pass", "mandatory_fit": "pass"},
-      "gate_notes": {
-        "license": {"reason": "Synthetic license review fixture; not a real approval.", "source_ids": ["SRC-001"]},
-        "security": {"reason": "Synthetic security review fixture; not a real approval.", "source_ids": ["SRC-001"]},
-        "privacy": {"reason": "Synthetic privacy review fixture; not a real approval.", "source_ids": ["SRC-001"]},
-        "deployment": {"reason": "Synthetic deployment review fixture; not a real approval.", "source_ids": ["SRC-001"]},
-        "mandatory_fit": {"reason": "Synthetic mandatory_fit review fixture; not a real approval.", "source_ids": ["SRC-001"]}
+      "id": "C-001",
+      "name": "Synthetic component C-001",
+      "url": "https://components.example/C-001",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "evidence": [
+        {
+          "source_id": "SRC-001",
+          "requirement_ids": [
+            "REQ-001"
+          ],
+          "claim": "Synthetic fixture: a component exposes the required interface. This is not real research.",
+          "level": "code-inspected"
+        }
+      ],
+      "gates": {
+        "license": "pass",
+        "security": "pass",
+        "privacy": "pass",
+        "deployment": "pass",
+        "mandatory_fit": "pass"
       },
-      "scores": {"requirement_fit": 5, "integration": 4, "maintenance": 3, "documentation": 4, "deployment": 5, "operating_cost": 3},
+      "gate_notes": {
+        "license": {
+          "reason": "Synthetic license review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "security": {
+          "reason": "Synthetic security review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "privacy": {
+          "reason": "Synthetic privacy review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "deployment": {
+          "reason": "Synthetic deployment review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "mandatory_fit": {
+          "reason": "Synthetic mandatory_fit review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        }
+      },
+      "scores": {
+        "requirement_fit": 5,
+        "integration": 4,
+        "maintenance": 3,
+        "documentation": 4,
+        "deployment": 5,
+        "operating_cost": 3
+      },
       "score_notes": {
-        "requirement_fit": {"reason": "Synthetic requirement_fit rating used only to test scoring.", "source_ids": ["SRC-001"]},
-        "integration": {"reason": "Synthetic integration rating used only to test scoring.", "source_ids": ["SRC-001"]},
-        "maintenance": {"reason": "Synthetic maintenance rating used only to test scoring.", "source_ids": ["SRC-001"]},
-        "documentation": {"reason": "Synthetic documentation rating used only to test scoring.", "source_ids": ["SRC-001"]},
-        "deployment": {"reason": "Synthetic deployment rating used only to test scoring.", "source_ids": ["SRC-001"]},
-        "operating_cost": {"reason": "Synthetic operating_cost rating used only to test scoring.", "source_ids": ["SRC-001"]}
+        "requirement_fit": {
+          "reason": "Synthetic requirement_fit rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "integration": {
+          "reason": "Synthetic integration rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "maintenance": {
+          "reason": "Synthetic maintenance rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "documentation": {
+          "reason": "Synthetic documentation rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "deployment": {
+          "reason": "Synthetic deployment rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        },
+        "operating_cost": {
+          "reason": "Synthetic operating_cost rating used only to test scoring.",
+          "source_ids": [
+            "SRC-001"
+          ]
+        }
       }
     },
     {
-      "id": "C-002", "name": "Synthetic component C-002", "url": "https://components.example/C-002", "requirement_ids": ["REQ-001"],
-      "evidence": [{"source_id": "SRC-002", "requirement_ids": ["REQ-001"], "claim": "Synthetic fixture: a component exposes the required interface. This is not real research.", "level": "code-inspected"}],
-      "gates": {"license": "unknown", "security": "pass", "privacy": "pass", "deployment": "pass", "mandatory_fit": "pass"},
-      "gate_notes": {
-        "license": {"reason": "Synthetic license review fixture; not a real approval.", "source_ids": ["SRC-002"]},
-        "security": {"reason": "Synthetic security review fixture; not a real approval.", "source_ids": ["SRC-002"]},
-        "privacy": {"reason": "Synthetic privacy review fixture; not a real approval.", "source_ids": ["SRC-002"]},
-        "deployment": {"reason": "Synthetic deployment review fixture; not a real approval.", "source_ids": ["SRC-002"]},
-        "mandatory_fit": {"reason": "Synthetic mandatory_fit review fixture; not a real approval.", "source_ids": ["SRC-002"]}
+      "id": "C-002",
+      "name": "Synthetic component C-002",
+      "url": "https://components.example/C-002",
+      "requirement_ids": [
+        "REQ-001"
+      ],
+      "evidence": [
+        {
+          "source_id": "SRC-002",
+          "requirement_ids": [
+            "REQ-001"
+          ],
+          "claim": "Synthetic fixture: a component exposes the required interface. This is not real research.",
+          "level": "code-inspected"
+        }
+      ],
+      "gates": {
+        "license": "unknown",
+        "security": "pass",
+        "privacy": "pass",
+        "deployment": "pass",
+        "mandatory_fit": "pass"
       },
-      "scores": {"requirement_fit": 5, "integration": 5, "maintenance": 5, "documentation": 5, "deployment": 5, "operating_cost": 5},
+      "gate_notes": {
+        "license": {
+          "reason": "Synthetic license review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "security": {
+          "reason": "Synthetic security review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "privacy": {
+          "reason": "Synthetic privacy review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "deployment": {
+          "reason": "Synthetic deployment review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "mandatory_fit": {
+          "reason": "Synthetic mandatory_fit review fixture; not a real approval.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        }
+      },
+      "scores": {
+        "requirement_fit": 5,
+        "integration": 5,
+        "maintenance": 5,
+        "documentation": 5,
+        "deployment": 5,
+        "operating_cost": 5
+      },
       "score_notes": {
-        "requirement_fit": {"reason": "Synthetic requirement_fit rating used only to test scoring.", "source_ids": ["SRC-002"]},
-        "integration": {"reason": "Synthetic integration rating used only to test scoring.", "source_ids": ["SRC-002"]},
-        "maintenance": {"reason": "Synthetic maintenance rating used only to test scoring.", "source_ids": ["SRC-002"]},
-        "documentation": {"reason": "Synthetic documentation rating used only to test scoring.", "source_ids": ["SRC-002"]},
-        "deployment": {"reason": "Synthetic deployment rating used only to test scoring.", "source_ids": ["SRC-002"]},
-        "operating_cost": {"reason": "Synthetic operating_cost rating used only to test scoring.", "source_ids": ["SRC-002"]}
+        "requirement_fit": {
+          "reason": "Synthetic requirement_fit rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "integration": {
+          "reason": "Synthetic integration rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "maintenance": {
+          "reason": "Synthetic maintenance rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "documentation": {
+          "reason": "Synthetic documentation rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "deployment": {
+          "reason": "Synthetic deployment rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        },
+        "operating_cost": {
+          "reason": "Synthetic operating_cost rating used only to test scoring.",
+          "source_ids": [
+            "SRC-002"
+          ]
+        }
       }
     }
   ],
-  "decisions": [{"requirement_id": "REQ-001", "disposition": "adopt", "candidate_ids": ["C-001"], "rationale": "Synthetic example only: C-001 clears fixture gates; C-002 has unresolved licensing."}],
-  "limitations": ["All candidates, sources, observations, and approvals are fictional test data.", "This example demonstrates the record contract, not research quality or working software."],
+  "decisions": [
+    {
+      "requirement_id": "REQ-001",
+      "disposition": "adopt",
+      "candidate_ids": [
+        "C-001"
+      ],
+      "rationale": "Synthetic example only: C-001 clears fixture gates; C-002 has unresolved licensing."
+    }
+  ],
+  "limitations": [
+    "All candidates, sources, observations, and approvals are fictional test data.",
+    "This example demonstrates the record contract, not research quality or working software."
+  ],
   "proposed_enhancements": []
 }

@@ -33,6 +33,12 @@ Score = sum(weight * rating / 5), on a 0-100 scale. Scores are a decision aid, n
 
 The helper checks record structure, references, dates, gates, and basic handoff completeness. It does not fetch sources, judge the truth of claims, approve a license, scan vulnerabilities, prove tests ran, or verify rendered diagrams. Draft records may intentionally be incomplete; handoff mode requires decisions and a query log. Requirement disposition is NOT proof that implementation acceptance criteria have passed.
 
+## Hardening in 0.2.0-rc.1
+
+The schema version remains 0.1; previously documented fields remain supported. Unexpected fields, nonfinite numbers, duplicate keys, unsafe controls, oversized strings/collections, and excessive nesting are now rejected rather than ignored. URLs require canonical ASCII DNS names, HTTPS, and no credentials or query parameters; local hosts, IP literals, ambiguous encodings, and nonstandard ports are rejected. Reserved example domains are permitted only in synthetic records. This intentionally tightens validation of formerly accepted invalid inputs.
+
+Every scoring row includes `evidence_truth_verified: false`. Even a fabricated but well-formed record can pass structural validation. A `tested` entry records an execution claim, not independently verified execution or a guarantee of a passing result. Evidence reviewers must inspect the result and reject failed tests as support for a capability claim. Unknown or failed gates must never be overridden by ranking.
+
 ## Authoritative references
 
 Checked 2026-09-05. Recheck applicable sources during an actual run.

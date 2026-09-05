@@ -1,42 +1,21 @@
 # Development status
 
-Cycle: initial v0.1.0 skill bootstrap. Date: 2026-09-05.
+Cycle: 0.2.0-rc.1 public-release preparation, 2026-09-05.
 
-## Completed
+## Implemented
 
-The initial implementation is published on `main` in commit `543065223ef0297405c892dc2ef528d4a00b4525`. It contains 19 files: the skill instructions, research/evaluation/security references, project templates, structured evidence contract, offline initialization/validation/scoring helpers, synthetic example, requirements baseline, architecture source diagrams, development roadmap, and CI configuration.
+Bounded offline parsing, strict URL/record checks, safer workspace writes, adversarial and integration tests, deterministic simulations, reproducible allowlisted packaging, MIT licensing, community documentation, and a pre-mortem. The original research-through-handoff scope remains unchanged.
 
-## Local verification
+## Local observations
 
-Validation executed with Python 3.13.5:
+Python 3.13.5 on Linux: **76 unit/integration tests passed**, with zero skipped tests. The original 30-test suite remains included. The deterministic simulation passed 12 named scenarios, all 243 gate-state combinations, and 1,000 invalid-score mutations. Two package builds were byte-identical, manifest verification passed, and five commands succeeded using the extracted helpers in an unrelated working directory.
 
-| Check | Observed result |
-| --- | --- |
-| `python scripts/scavenger.py check-skill .` | Passed repository-specific structure and local-link checks. |
-| `python -m unittest discover -s tests -v` | 30 tests passed. |
-| `python scripts/scavenger.py validate examples/demo-record.json` | Passed as an explicitly synthetic handoff record. |
-| `python scripts/scavenger.py score examples/demo-record.json` | C-001: 84; C-002: review-required, score withheld. |
+Branch-enabled coverage.py reported **91% combined coverage** across the developer/runtime scripts. This is in-process coverage; separate CLI subprocesses were not instrumented. It is not a claim of 91% branch-only coverage or full path coverage. Independent PyYAML parsing accepted the actual skill frontmatter and YAML configuration files. Structured counts and runtime content hashes are recorded in [local validation](../reports/local-validation.json).
 
-The skill frontmatter also parsed successfully with the environment's installed YAML parser, and all relative Markdown file links resolved. Eighteen published Git blobs matched the locally tested files byte-for-byte. The demo JSON was reformatted during upload and was subsequently exercised by remote CI.
+## Remote observations
 
-An initial test run exposed overly generic URL validation errors. The error handling was corrected, and the complete suite was rerun successfully before publication.
+The candidate has not yet been associated with an observed remote CI run in this initial status snapshot. Do not infer a passing run from the workflow files. The configured matrix is Linux/Python 3.11, 3.12, 3.13, plus macOS and Windows/Python 3.13; CodeQL is a separate workflow. A follow-up evidence record must identify exact tested commits and run IDs.
 
-## Remote verification
+## Open launch gates
 
-[Validate Scavenger run 33984100225](https://github.com/yashumani/scavenger/actions/runs/33984100225) executed against implementation commit `543065223ef0297405c892dc2ef528d4a00b4525` on 2026-09-05. All three jobs completed successfully:
-
-| Job | Result |
-| --- | --- |
-| Python 3.11 | Success: skill check, 30-test suite, demo record validation, and scoring. |
-| Python 3.12 | Success: skill check, 30-test suite, demo record validation, and scoring. |
-| Python 3.13 | Success: skill check, 30-test suite, demo record validation, and scoring. |
-
-The workflow uses read-only repository permissions and commit-pinned actions. This follow-up commit updates only the status document; the verification above is explicitly tied to the implementation commit, not to untested future changes.
-
-## Not yet verified
-
-No real-project deep-research pilot, agent-host installation, generated architecture illustration, integration execution, or production deployment has been completed. The example is fictional test data, not project research. Unit tests check the record helper, not the quality or safety of an agent's behavior.
-
-## Decisions and next task
-
-The repository owner must approve Scavenger's own distribution license before an open-source release. This does not block safe development or a private project pilot. The next development slice is a live, source-backed pilot that exercises requirement intake, candidate inspection, architectural synthesis, and handoff review.
+No stable release/tag, supported-host certification, full live research pilot, rendered/generated-image validation, independent audit, or owner-administered security-setting change is claimed. Main was unprotected and rulesets were empty at inspection; private-reporting and secret-protection status were not verified. See [release readiness](RELEASE-READINESS.md) and [the pre-mortem](PREMORTEM.md).
