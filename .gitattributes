@@ -1,0 +1,2 @@
+# Keep text checkout bytes identical across platforms for reproducible packages.
+* text=auto eol=lf

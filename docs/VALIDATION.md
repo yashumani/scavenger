@@ -23,7 +23,7 @@ The unit/integration suite covers record structure, gate/scoring invariants, con
 
 The deterministic simulation checks 12 named scenarios, all 243 combinations of the five three-state gates, and 1,000 invalid-score mutations with seed 20260905. It runs zero LLMs and performs zero live research studies. A deliberate scenario documents that a plausible fabricated claim can pass structural validation; scoring still declares evidence truth unverified.
 
-The package check builds twice from an explicit allowlist, compares exact bytes, verifies paths and per-file hashes, then executes five commands using its own extracted helpers from an unrelated working directory. It does not install the skill into an agent host.
+The package check builds twice from an explicit allowlist, compares exact bytes, verifies paths and per-file hashes, then executes five commands using its own extracted helpers from an unrelated working directory. It does not install the skill into an agent host. Initial cross-platform CI exposed different ZIP hashes from Windows checkout line-ending conversion. The release-preparation follow-up adds `.gitattributes` with LF text checkout normalization; compare the exact-revision package hashes across platforms before claiming cross-platform reproducibility.
 
 ## Observed results and exact revisions
 
