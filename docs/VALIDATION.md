@@ -32,3 +32,9 @@ See [STATUS.md](STATUS.md) for the recorded local test count, coverage boundary,
 ## Not completed by these checks
 
 A full live project research pilot, installed-host activation and adversarial tool traces, diagram rendering, architecture-image generation/review, independent penetration testing, signed release attestations, and verification of owner-controlled security settings are not established by these tests. Host cases in `evals/host-cases.json` remain explicitly not-run. See [release readiness](RELEASE-READINESS.md) before making launch claims.
+
+## Finalization artifact checks
+
+The finalization workflow adds a `package` job dependent on all five validation jobs. It verifies that the checkout equals `GITHUB_SHA`, records its Git tree, repeats the package smoke test and deterministic simulation, rebuilds the downloadable ZIP, and requires that its hash equal the smoke-tested hash. Only the ZIP, checksum file, and explicitly constructed evidence JSON are uploaded; no environment dump or workspace glob is used.
+
+The artifact carries the current source commit and workflow run/attempt, avoiding a documentation-only update loop to embed a commit's own SHA. Its metadata is first-party provenance, not a signed attestation. Presence of an artifact is not proof that the separate CodeQL workflow passed. Exact finalization results belong in the PR/run records; the historical counts in STATUS.md remain tied to their stated revisions.

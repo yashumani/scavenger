@@ -5,11 +5,12 @@
 **A reusable agent skill for turning project requirements into an evidence-backed, open-source-first architecture and development plan.**
 
 [![Validation](https://github.com/yashumani/scavenger/actions/workflows/validate.yml/badge.svg)](https://github.com/yashumani/scavenger/actions/workflows/validate.yml)
+[![CodeQL](https://github.com/yashumani/scavenger/actions/workflows/codeql.yml/badge.svg)](https://github.com/yashumani/scavenger/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 **Release candidate: `0.2.0-rc.1`.** Built for community review, not advertised as an independently audited or universally compatible agent. See [verification evidence](docs/VALIDATION.md) and [remaining launch gates](docs/RELEASE-READINESS.md).
 
-[Start using it](docs/INSTALLATION.md) · [Read the skill](SKILL.md) · [Contribute](CONTRIBUTING.md) · [Security](SECURITY.md)
+[Start using it](docs/INSTALLATION.md) · [Release notes](docs/RELEASE-NOTES-0.2.0-rc.1.md) · [Read the skill](SKILL.md) · [Contribute](CONTRIBUTING.md) · [Security](SECURITY.md)
 
 ## Why Scavenger?
 
@@ -87,6 +88,12 @@ python scripts/build_release.py ../scavenger-0.2.0-rc.1.zip --verify
 The release checker audits declared repository policies, builds the package twice, checks byte-for-byte reproducibility, and runs five helper commands from a clean extracted package. The ZIP is built from an explicit allowlist and carries a per-file SHA-256 manifest. **Checksums detect changes; they are not signatures or a substitute for trusting the source.**
 
 Offline tests, deterministic simulations, a package smoke test, and an installed-agent evaluation are different kinds of evidence. [Validation](docs/VALIDATION.md) records which actually ran; the [pre-mortem](docs/PREMORTEM.md) records remaining risks.
+
+### Download the GitHub-verified candidate
+
+Open a successful **Validate Scavenger** run for `main` in [GitHub Actions](https://github.com/yashumani/scavenger/actions/workflows/validate.yml), then download its `scavenger-rc-<commit>-<attempt>` artifact. The package job runs only after all five validation configurations succeed. It supplies the versioned ZIP, `SHA256SUMS`, and `validation-evidence.json`, including the exact source commit and tree. Check the separate **CodeQL security analysis** run for the same commit before relying on the candidate.
+
+Artifact downloads require GitHub sign-in and are retained for 30 days, subject to repository retention limits. The inner Scavenger ZIP is the reproducible package; GitHub's outer artifact ZIP is only a download container. This is a community-review build, not a tagged stable release. The [installation guide](docs/INSTALLATION.md) explains verification and how to rebuild an expired artifact.
 
 ## Help make it better
 

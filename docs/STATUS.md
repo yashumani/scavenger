@@ -45,3 +45,9 @@ This follow-up changes only the status document. The remote results above are ti
 No stable tag/release, installed-agent certification, full live research pilot, rendered/generated-image validation, independent security audit, or owner-administered security-setting change is claimed. Main was unprotected and rulesets were empty at inspection; private-reporting and secret-protection status were not verified. Twelve host-evaluation cases are prepared but remain not-run.
 
 [Issue #2](https://github.com/yashumani/scavenger/issues/2) tracks the repository controls and live/host validation still required before broad promotion. See [release readiness](RELEASE-READINESS.md), [validation details](VALIDATION.md), and [the pre-mortem](PREMORTEM.md).
+
+## Community-review finalization
+
+The finalization change retains version `0.2.0-rc.1` and the existing runtime code. It adds [candidate release notes](RELEASE-NOTES-0.2.0-rc.1.md), reconciles onboarding and readiness documentation, and makes a reviewed package downloadable from GitHub Actions after the full validation matrix succeeds. The package records its source commit/tree and run ID and is checked against the just-smoke-tested hash.
+
+The results above remain historical evidence for their named revisions, not pre-claimed results for this finalization change. Consult [Validate Scavenger](https://github.com/yashumani/scavenger/actions/workflows/validate.yml) and [CodeQL](https://github.com/yashumani/scavenger/actions/workflows/codeql.yml) for the final commit; its downloadable evidence records provenance without a further self-referential status commit. [Issue #2](https://github.com/yashumani/scavenger/issues/2) remains open for owner-controlled settings and live/host validation. No stable release, tag, or security certification is implied.

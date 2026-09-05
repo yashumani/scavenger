@@ -37,3 +37,72 @@ jobs:
       - run: python scripts/scavenger.py score examples/demo-record.json
       - run: python scripts/simulate.py
       - run: python scripts/release_check.py
+  package:
+    name: Package community-review candidate
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.13'
+      - name: Build exact-revision package and evidence
+        shell: python
+        run: |
+          import json
+          import os
+          import subprocess
+          import sys
+          from pathlib import Path
+
+          root = Path.cwd().resolve()
+          sys.path.insert(0, str(root / 'scripts'))
+          import build_release
+          import release_check
+          import simulate
+
+          revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          tree = subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip()
+          if revision != os.environ['GITHUB_SHA']:
+              raise SystemExit('Checkout does not match the workflow revision.')
+          audit = release_check.audit(root)
+          package = release_check.smoke(root)
+          simulation = simulate.run()
+          version = (root / 'VERSION').read_text(encoding='utf-8').strip()
+          output = root / 'dist'
+          output.mkdir(exist_ok=False)
+          archive = output / f'scavenger-{version}.zip'
+          digest = build_release.build(root, archive)
+          if digest != package['sha256']:
+              raise SystemExit('Published package differs from smoke-tested package.')
+          (output / 'SHA256SUMS').write_text(f'{digest}  {archive.name}\n', encoding='utf-8')
+          evidence = {
+              'kind': 'github-actions-package-verification' if os.environ.get('GITHUB_ACTIONS') == 'true' else 'local-package-workflow-smoke',
+              'version': version,
+              'source_commit': revision,
+              'source_tree': tree,
+              'workflow_run_id': os.environ['GITHUB_RUN_ID'],
+              'workflow_run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'python': sys.version.split()[0],
+              'audit': audit,
+              'package': package,
+              'simulation': simulation,
+              'evidence_boundary': 'Matrix outcomes are in the parent workflow jobs. CodeQL is a separate workflow and must be checked for this revision. This is not host certification, a signature, or a stable release.'
+          }
+          (output / 'validation-evidence.json').write_text(json.dumps(evidence, indent=2) + '\n', encoding='utf-8')
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a', encoding='utf-8') as summary:
+              summary.write(f'## Community-review package {version}\n\nSource commit: `{revision}`\n\nSource tree: `{tree}`\n\nZIP SHA-256: `{digest}`\n\nIncludes SHA256SUMS and validation-evidence.json. Check the separate CodeQL workflow for the same revision. Not a stable release or host certification.\n')
+      - name: Upload review package and evidence
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7, resolved 2026-09-05
+        with:
+          name: scavenger-rc-${{ github.sha }}-${{ github.run_attempt }}
+          path: |
+            dist/scavenger-*.zip
+            dist/SHA256SUMS
+            dist/validation-evidence.json
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0

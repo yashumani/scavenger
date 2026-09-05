@@ -23,3 +23,13 @@ Complete [the host evaluation protocol](../references/host-evaluation.md) before
 `python scripts/build_release.py ../scavenger-0.2.0-rc.1.zip` refuses to overwrite an existing file. `python scripts/build_release.py ../scavenger-0.2.0-rc.1.zip --verify` verifies archive paths and per-file hashes without executing archive contents. The allowlist is `release-files.txt`.
 
 A checksum proves consistency only when the expected checksum came from a trusted source. It is not a publisher signature. Do not execute a ZIP merely because it contains a self-consistent manifest. The repository's package smoke test executes only the package it just built from the local reviewed source.
+
+## Download a candidate from GitHub Actions
+
+Choose a successful **Validate Scavenger** run on `main` and confirm that **CodeQL security analysis** also passed for its exact commit. Download the `scavenger-rc-<commit>-<attempt>` artifact from the run's Artifacts section. Sign-in and repository read access are required; artifacts expire after the configured 30-day retention period, subject to repository policy. See [GitHub's download instructions](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/download-workflow-artifacts).
+
+Extract the outer GitHub download container into a new trusted directory. It contains `scavenger-0.2.0-rc.1.zip`, `SHA256SUMS`, and `validation-evidence.json`. Compare the source commit and tree in the evidence with the selected run. Compare the inner ZIP's SHA-256 with `SHA256SUMS` and the workflow summary. Verify the inner package using the reviewed repository's `scripts/build_release.py --verify` command before loading the skill. Do not confuse GitHub's outer artifact digest with the inner Scavenger ZIP hash.
+
+The evidence file records the package's repeat-build/hash checks, five extracted-helper smoke commands, and deterministic simulations. It does not incorporate the separate CodeQL result or claim installed-host evaluation. Consult the actual workflow jobs for matrix results and Windows-only skips.
+
+For an expired artifact, check out the exact source commit identified in the run, review it, and rerun the documented local tests and packaging commands. Do not assume that a later `main` checkout will reproduce an earlier package. No automatic installer, elevated permissions, stable tag, or GitHub release is introduced by this artifact workflow.

@@ -9,8 +9,8 @@ Target: public crowdsourcing and contributor review. This is a **release candida
 | Clear purpose, limits, and reproducible quick start | README and INSTALLATION.md implemented. |
 | Distribution rights and provenance | MIT LICENSE, matching metadata, license decision, third-party notices. |
 | Offline helper tests and adversarial simulations | Commands and exact observed results in VALIDATION.md. |
-| Safe/reproducible packaging | Explicit allowlist, SHA-256 manifest, tamper/path tests, five extracted-helper commands. |
-| CI and static analysis | Workflows configured; exact-commit observations belong in STATUS.md, not inferred from configuration. |
+| Safe/reproducible packaging | Explicit allowlist, SHA-256 manifest, tamper/path tests, five extracted-helper commands; finalization adds a GitHub Actions artifact after the validation matrix. |
+| CI and static analysis | Five validation configurations and CodeQL passed for the recorded preparation revision; see STATUS.md. Finalization changes require their own checks. |
 | Contribution and responsible reporting | CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, issue forms, PR template, CODEOWNERS. |
 | Repository protections | OPEN: main was unprotected and rulesets empty at inspection on 2026-09-05. |
 | Private vulnerability reporting | OPEN: availability could not be verified with the connector; enabling/testing requires owner administration. |
@@ -27,7 +27,7 @@ The connected tool can read branch/ruleset status but does not expose administra
 
 ## Publication decision
 
-The source can be inspected and contributed to as a clearly labeled community-review candidate with visible limitations. Do not promote a stable/supported-agent release, marketplace compatibility, or “secure to use” guarantee until the corresponding open gates have evidence. No GitHub release, tag, marketplace listing, broad announcement, paid service, or deployment is created by this preparation step.
+The source and validated GitHub Actions package can be inspected and contributed to as a clearly labeled community-review candidate with visible limitations. See [the candidate release notes](RELEASE-NOTES-0.2.0-rc.1.md). Do not promote a stable/supported-agent release, marketplace compatibility, or “secure to use” guarantee until the corresponding open gates have evidence. No GitHub release, tag, marketplace listing, broad announcement, paid service, or deployment is created by this preparation step.
 
 ## Versioning, rollback, and release evidence
 
