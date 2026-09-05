@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1",
+  "project": {"name": "Untitled project", "as_of": "2026-09-05", "mode": "draft", "synthetic": false},
+  "requirements": [],
+  "sources": [],
+  "query_log": [],
+  "candidates": [],
+  "decisions": [],
+  "limitations": ["Draft template only. No research has been performed. Replace as_of with the actual research date."],
+  "proposed_enhancements": []
+}
