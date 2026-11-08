@@ -96,7 +96,7 @@ jobs:
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a', encoding='utf-8') as summary:
               summary.write(f'## Community-review package {version}\n\nSource commit: `{revision}`\n\nSource tree: `{tree}`\n\nZIP SHA-256: `{digest}`\n\nIncludes SHA256SUMS and validation-evidence.json. Check the separate CodeQL workflow for the same revision. Not a stable release or host certification.\n')
       - name: Upload review package and evidence
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7, resolved 2026-09-05
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7, resolved 2026-09-05
         with:
           name: scavenger-rc-${{ github.sha }}-${{ github.run_attempt }}
           path: |
